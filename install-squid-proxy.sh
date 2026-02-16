@@ -36,7 +36,7 @@ echo ""
 systemctl stop squid
 
 # Generate random credentials
-PROXY_USERNAME="loadboard_proxy"
+PROXY_USERNAME="squid_proxy"
 PROXY_PASSWORD=$(openssl rand -base64 16 | tr -d "=+/" | cut -c1-16)
 PROXY_PORT=3128
 SERVER_IP=$(hostname -I | awk '{print $1}')

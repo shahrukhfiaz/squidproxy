@@ -53,7 +53,7 @@ The script performs the following actions:
 |---------|-------|
 | **Port** | 3128 |
 | **Protocol** | HTTP |
-| **Username** | `loadboard_proxy` |
+| **Username** | `squid_proxy` |
 | **Password** | *Auto-generated (16 chars)* |
 | **Authentication** | Basic NCSA |
 | **Cache Size** | 100 MB |
@@ -75,18 +75,18 @@ Squid Proxy Credentials
 Server IP:    167.99.147.118
 Proxy Port:   3128
 Protocol:     HTTP
-Username:     loadboard_proxy
+Username:     squid_proxy
 Password:     xK9mN2pQ7wR4sT1v
 
 Connection String:
-http://loadboard_proxy:xK9mN2pQ7wR4sT1v@167.99.147.118:3128
+http://squid_proxy:xK9mN2pQ7wR4sT1v@167.99.147.118:3128
 ```
 
 ### Test Proxy Connection
 
 ```bash
 # Replace with your actual credentials from /root/squid-proxy-credentials.txt
-curl -x http://loadboard_proxy:YOUR_PASSWORD@localhost:3128 http://httpbin.org/ip
+curl -x http://squid_proxy:YOUR_PASSWORD@localhost:3128 http://httpbin.org/ip
 ```
 
 **Expected response:**
@@ -119,7 +119,7 @@ sudo systemctl restart squid
 ### cURL Example
 
 ```bash
-curl -x http://loadboard_proxy:PASSWORD@PROXY_IP:3128 https://example.com
+curl -x http://squid_proxy:PASSWORD@PROXY_IP:3128 https://example.com
 ```
 
 ### Node.js Example
@@ -128,7 +128,7 @@ curl -x http://loadboard_proxy:PASSWORD@PROXY_IP:3128 https://example.com
 const axios = require('axios');
 const HttpsProxyAgent = require('https-proxy-agent');
 
-const proxyUrl = 'http://loadboard_proxy:PASSWORD@PROXY_IP:3128';
+const proxyUrl = 'http://squid_proxy:PASSWORD@PROXY_IP:3128';
 const agent = new HttpsProxyAgent(proxyUrl);
 
 axios.get('https://httpbin.org/ip', { httpsAgent: agent })
@@ -146,7 +146,7 @@ app.commandLine.appendSwitch('proxy-server', 'PROXY_IP:3128');
 app.on('login', (event, webContents, request, authInfo, callback) => {
   if (authInfo.isProxy) {
     event.preventDefault();
-    callback('loadboard_proxy', 'PASSWORD');
+    callback('squid_proxy', 'PASSWORD');
   }
 });
 ```
@@ -156,7 +156,7 @@ app.on('login', (event, webContents, request, authInfo, callback) => {
 **Manual Proxy Settings:**
 - **Proxy Address:** `PROXY_IP`
 - **Port:** `3128`
-- **Username:** `loadboard_proxy`
+- **Username:** `squid_proxy`
 - **Password:** *Your auto-generated password*
 
 ## Adding More Users
@@ -275,10 +275,10 @@ sudo ufw allow 3128/tcp
 
 ```bash
 # From local machine
-curl -x http://loadboard_proxy:PASSWORD@localhost:3128 http://httpbin.org/ip
+curl -x http://squid_proxy:PASSWORD@localhost:3128 http://httpbin.org/ip
 
 # From remote machine
-curl -x http://loadboard_proxy:PASSWORD@PROXY_IP:3128 http://httpbin.org/ip
+curl -x http://squid_proxy:PASSWORD@PROXY_IP:3128 http://httpbin.org/ip
 ```
 
 ## Uninstallation
@@ -307,7 +307,7 @@ sudo ufw delete allow 3128/tcp
 ## Security Recommendations
 
 🔒 **Secure Your Credentials:**
-- Change the default username from `loadboard_proxy`
+- Change the default username from `squid_proxy`
 - Use strong passwords (auto-generated is secure)
 - Restrict access to `/root/squid-proxy-credentials.txt`
 
